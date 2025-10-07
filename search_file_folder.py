@@ -4,16 +4,19 @@ You can define the extension, search for folders or files
 recursively or only in the root of the given directory.
 
 @author: Vagner Vargas
-@version: 0.1
+@version: 0.2
 @license: MIT
 """
 
-__author__ = "Vagner Vargas"
-__version__ = "0.1"
-__status__ = "Development"
-
 import glob
 import os
+
+# Configure here
+DIRTARGET = "D:/Images"
+DIRFILE = "file"  # Use "file" or "dir"
+WORD = "test"
+EXT = "jpg"
+RECURSIVE = True  # True to search in subfolder, False to search only in root
 
 
 class SearchFilesFolder:
@@ -52,35 +55,34 @@ class SearchFilesFolder:
 
         if result:
             if self.dir_or_file == "dir" or self.dir_or_file == "folder":
-                print('Subdirectories found, sorted by name:')
+                print("Subdirectories found, sorted by name:")
             else:
-                print('Files found, sorted by name:')
+                print("Files found, sorted by name:")
             for file in result:
                 print(file)
         else:
-            print('No files or subdirectories found!')
+            print("No files or subdirectories found!")
 
     def search_files(self):
         if self.extension:
-            dirs = os.path.join(self.target_dir, f'**/*{self.keyword}*.{self.extension}')
+            dirs = os.path.join(
+                self.target_dir, f"**/*{self.keyword}*.{self.extension}"
+            )
         else:
-            dirs = os.path.join(self.target_dir, f'**/*{self.keyword}*')
+            dirs = os.path.join(self.target_dir, f"**/*{self.keyword}*")
         return glob.glob(dirs, recursive=self.recursive)
 
     def search_dir(self):
-        dirs = os.path.join(self.target_dir, f'**/*{self.keyword}*')
-        return [directory for directory in glob.glob(dirs, recursive=self.recursive) if os.path.isdir(directory)]
+        dirs = os.path.join(self.target_dir, f"**/*{self.keyword}*")
+        return [
+            directory
+            for directory in glob.glob(dirs, recursive=self.recursive)
+            if os.path.isdir(directory)
+        ]
 
 
 def main():
-    # Configure here
-    dirtarget = "D:/ImageFiles"
-    dirfile = "dir"  # Use "file" or "dir"
-    word = "test"
-    ext = "jpg"
-    recursive = True  # True to search in subfolder, False to search only in root
-
-    new_search = SearchFilesFolder(dirtarget, dirfile, word, ext, recursive)
+    new_search = SearchFilesFolder(DIRTARGET, DIRFILE, WORD, EXT, RECURSIVE)
     new_search.start()
 
 

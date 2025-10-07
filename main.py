@@ -2,7 +2,7 @@
 Some classes with tools for files and folders.
 
 @author: Vagner Vargas
-@version: 0.1
+@version: 0.2
 @license: MIT
 """
 
