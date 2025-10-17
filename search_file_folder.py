@@ -73,10 +73,13 @@ class SearchFilesFolder:
         return glob.glob(dirs, recursive=self.recursive)
 
     def search_dir(self):
-        dirs = os.path.join(self.target_dir, f"**/*{self.keyword}*")
+        if self.recursive:
+            pattern = os.path.join(self.target_dir, f"**/*{self.keyword}*")
+        else:
+            pattern = os.path.join(self.target_dir, f"*{self.keyword}*")
         return [
             directory
-            for directory in glob.glob(dirs, recursive=self.recursive)
+            for directory in glob.glob(pattern, recursive=self.recursive)
             if os.path.isdir(directory)
         ]
 
