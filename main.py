@@ -12,4 +12,4 @@ def print_hi(text):
 
 
 if __name__ == '__main__':
-    print_hi('see each class file for more information.')
+    print_hi('See each class file for more information.')

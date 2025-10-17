@@ -1,25 +1,70 @@
 # Files Simple Tools
-Coleção de ferramentas simples para executar tarefas rotineiras em arquivos e pastas.
 
-***Necessário Python 3 instalado***
+Collection of small tools in class format to perform common file and folder tasks.
+
+Prerequisite: Python 3
+
+## Overview
+
+This repository contains two simple utilities:
+
+- `search_file_folder.py` — (SearchFilesFolder class) Quickly find files or folders locally, with optional recursion and extension filtering.
+- `clean_files_names.py` — (CleanFilesNames class) Clean and rename filenames by removing accents and special characters, limiting length, normalizing case and avoiding name collisions.
+
+## Requirements
+
+- Python 3.x
+- Standard library only (no external dependencies by default)
+
+Recommendation:
+- For reproducible environments, consider using a virtual environment:
+  ```bash
+  python -m venv .venv
+  source .venv/bin/activate   # Linux/macOS
+  .venv\Scripts\activate      # Windows
+  pip install -r requirements-optional.txt
+  ```
 
 ## search_file_folder.py
-Classe para localizar rapidamente arquivos ou pastas localmente.
 
-Você pode definir a extensão, pesquisar pastas ou arquivos, recursivamente ou apenas na raiz do diretório fornecido.
+Search for files or directories by name and optional extension.
 
+Usage example:
+```py
+from search_file_folder import SearchFilesFolder
 
-### Atributos:
-- target_dir (str): O diretório onde a pesquisa será realizada.
-- dir_or_file (str): 'dir' para pesquisar diretórios ou 'file' para arquivos.
-- keyword (str): A palavra-chave a ser pesquisada dentro de nomes de arquivo/pasta.
-- extension (str): A extensão de arquivo a ser filtrada (aplica-se somente ao pesquisar arquivos).
-- recursive (bool): Se deve pesquisar recursivamente em subdiretórios.
-
-
-### Exemplo de uso:
+# Search for files with "test" in the name and "jpg" extension, recursively
+search = SearchFilesFolder("D:/ImageFiles", "file", "test", "jpg", True)
+search.start()
 ```
-new_search = SearchFilesFolder("D:/ImageFiles", "file", "test", "jpg", True)
-new_search.start()
+
+Notes:
+- `dir_or_file` accepts `"dir"`, `"folder"` or `"file"`.
+- When `recursive=True`, the search traverses subdirectories using glob.
+
+## clean_files_names.py
+
+Clean filenames in a target directory:
+- Remove accents
+- Replace spaces and special characters with underscores
+- Limit base name to 30 characters
+- Convert to lowercase
+- Preserve file extension
+- If a cleaned name already exists, append `_1`, `_2`, ... to avoid collisions
+
+Usage example:
+```py
+from clean_files_names import CleanFilesNames
+
+renamer = CleanFilesNames("D:/ImageFiles")
+renamer.rename_files()
 ```
-Fará a busca na pasta D:/ImageFiles por arquivos de imagem jpg, tendo "test" no nome.
+
+Behavior notes:
+- Only actual files are renamed (directories are skipped).
+- Extensions are normalized to lowercase and preserved.
+- The script returns a list of renamed pairs and prints progress and errors.
+
+## License
+
+MIT License — see the source file headers for author and version information.
